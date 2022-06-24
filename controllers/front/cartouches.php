@@ -1,17 +1,57 @@
 <?php
+
+use mymodule\Entity\PDACustomer;
+use Doctrine\ORM\EntityManagerInterface;
+
+use mymodule\Repository\PDACustomerRepository;
 class mymoduleCartouchesModuleFrontController extends ModuleFrontController
 {
     private $num;
 
     public function process()
     {
-        $this->num = Tools::getValue("num");
-        dump($this->num);
+        $id_customer = 3;
+
+        $this->num = (int) Tools::getValue("num");
+        $entityManager = $this->get('doctrine.orm.entity_manager');
+        dump($entityManager);
+        $repository = $entityManager->getRepository(PDACustomer::class);
+
+        dump($repository);
+
+        $pdaCustomers = $repository->findBy(
+            ['id_customer' => $id_customer],
+            ['name_customer' => 'DESC']
+        );
+        $pdaCustomerOne = $repository->findOneBy(['id_customer' => $id_customer]);
+        $pdaCustomer = $repository->find(2);
+        dump($pdaCustomers);
+        dump($pdaCustomerOne);
+        dump($pdaCustomer);
+        dump($repository->findAll());
+
+        // $pdaCustomer->setNameCustomer("Arnold");
+        $pdaCustomer->setNameCustomer("Lambertus Apotheke");
+        $entityManager->flush();
+
+        $pdaCustomer = $repository->find(2);
+        dump($pdaCustomer);
+
+        // $entityManager->remove($pdaCustomer);
+        // $entityManager->flush();
+
+        // $pdaCustomers = $repository->findAllBySocId(4);
+        // dump($pdaCustomers);
+
+        // $pdaCustomerRepository = $this->get('pda_customer_repository');
+        // $pdaCustomerRepository = $this->get('product_comment_repository');
+        // dump($pdaCustomerRepository);
+
+        // dump($doctrine);
     }
 
     public function initContent()
     {
-        // $num = 0;
         $formFields = [
 
             // Num

@@ -7,6 +7,9 @@ class MyModule extends Module
 {
     public function __construct()
     {
+        ini_set('display_errors', 1);
+        error_reporting(E_ALL);
+        
         $this->name = 'mymodule';
         $this->tab = 'front_office_features';
         $this->version = '1.0.0';
