@@ -7,6 +7,8 @@ class mymoduleCartouchesModuleFrontController extends ModuleFrontController
     {
         $this->num = Tools::getValue("num");
         dump($this->num);
+
+        dump($this->context->link->getModuleLink('mymodule','cartouches'));
     }
 
     public function initContent()
